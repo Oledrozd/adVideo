@@ -1,0 +1,249 @@
+//Less variables for app
+@main-color:#ffffff;
+@secondary-color:#000000;
+
+html,body {
+  height: 100%;
+  background: #cccccc;
+  font-family: 'Helvetica', sans-serif;
+}
+body {
+  position: relative;
+}
+
+.main {
+
+  width: 970px;
+  height: 250px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -125px 0 0 -485px;
+  box-sizing: border-box;
+  border: 1px solid @secondary-color;
+  color: @secondary-color;
+  background: @main-color;
+  overflow: hidden;
+
+  .ad {
+
+    &-info, &-video,&-control {
+      display: inline-block;
+      vertical-align: top;
+      padding-bottom: 14px;
+      height: 94%;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    &-close {
+      text-align: right;
+      font-size: 12px;
+    }
+
+    &-info {
+      width: 25%;
+      padding-left: 30px;
+
+      &-title {
+
+        &__logo {
+          background: url("../images/T_SamsungLogo.png") no-repeat;
+          background-size: 70px;
+          width: 75px;
+          height: 12px;
+          margin-bottom: 5px;
+        }
+
+        &__model {
+          background: url("../images/T_GalaxyLogo.png") -4px 0 no-repeat;
+          background-size: 180px;
+          width: 180px;
+          height: 30px;
+        }
+      }
+
+      &__text {
+        font-size: 1.5em;
+        font-weight: lighter;
+        position: absolute;
+        bottom: 30px;
+      }
+
+    }
+
+    &-video {
+      width: 50%;
+
+      &__video-container {
+        height: 100%;
+        background: url("../images/phone_sprite.png") no-repeat;
+      }
+
+      &__rain-container {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+
+        & .ad-video__rain-drop {
+          position: absolute;
+          z-index: -1;
+          background-size: cover;
+          width: 24px;
+          height: 24px;
+
+          &_1 {
+            background: url("../images/raindrop_1.png") no-repeat;
+            width: 30px;
+            height: 30px;
+          }
+          &_2 {
+            background: url("../images/raindrop_2.png") no-repeat;
+          }
+          &_3 {
+            background: url("../images/raindrop_3.png") no-repeat;
+          }
+          &_4 {
+            background: url("../images/raindrop_4.png") no-repeat;
+          }
+        }
+      }
+
+      & iframe {
+        position: absolute;
+        top: 14px;
+        left: 77px;
+        height: 198px;
+        width: 362px;
+      }
+
+      &__flash {
+        background:url("../images/flash.png") no-repeat;
+        background-size: cover;
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        top: 19%;
+        left: 17%;
+        z-index: -1;
+        opacity: 0;
+        transition: .2s;
+      }
+
+      &__highlight{
+        background: url("../images/card_highlight.png") no-repeat;
+        background-size: 40%;
+        width: 56px;
+        height: 38px;
+        position: absolute;
+        top: 61%;
+        left: 16%;
+        transition: .2s;
+        z-index: -1;
+        opacity: 0;
+        background-position: -6px 0px;
+      }
+    }
+
+    &-control {
+      width: 24%;
+
+      &-explore, &-explanation {
+        display: inline-block;
+        vertical-align: top;
+        height: 100%;
+      }
+
+      &-explore {
+
+        width: 30% ;
+        position: relative;
+
+        &__control{
+          writing-mode: bt-lr; /* IE */
+          -webkit-appearance: slider-vertical;
+          width: 2px;
+          height: 100%;
+          padding: 0 47%;
+
+
+          &::-webkit-slider-runnable-track {
+            background: @secondary-color;
+            width: 100%;
+          }
+
+          &::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width:15px;
+            height:15px;
+            border-radius: 50%;
+
+            cursor: move;
+            margin-left: -10px;
+            background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4DDBFF), to(#00CCFF));
+          }
+          &::-moz-range-thumb {
+            width:15px;
+            height:15px;
+            border-radius: 50%;
+            background: @secondary-color;
+            cursor: move;
+            margin-left: -10px;
+            background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4DDBFF), to(#00CCFF));
+          }
+          &::-ms-thumb {
+            width:15px;
+            height:15px;
+            border-radius: 50%;
+            background: @secondary-color;
+            cursor: move;
+            margin-left: -10px;
+            background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4DDBFF), to(#00CCFF));
+          }
+        }
+
+      }
+
+      &-explanation {
+        width: 68% ;
+        position: relative;
+        padding-right: 30px;
+        box-sizing: border-box;
+        text-align: center;
+
+        &__explore, &-button {
+          height: 50%;
+        }
+
+        &__explore {
+          font-size: 12px;
+          font-weight: bold;
+        }
+
+        &-button {
+          vertical-align: bottom;
+          position: relative;
+
+          &__buy {
+            text-transform: uppercase;
+            background: @secondary-color;
+            color: @main-color;
+            width: 90%;
+            border:none;
+            outline: none;
+            border-radius: 20px;
+            height: 30px;
+            line-height: 30px;
+            cursor: pointer;
+            position: absolute;
+            bottom: 0;
+            left: 5%;
+          }
+        }
+      }
+
+    }
+  }
+
+}
