@@ -5,13 +5,21 @@
     <title>Video Ad</title>
     <link rel="stylesheet" href="styles/reset.css">
     <link rel="stylesheet" href="styles/main.css">
+
 </head>
 <body>
     <main class="main">
 
+        <div class="ad-preloader">
+            Loading, please wait...
+        </div>
+
         <div class="ad-close">
 
-            <div class="ad-close__button">Close Ad</div>
+            <div class="ad-close__button">
+                Close Ad
+                <img class="button-close" src="images/close_button.png" alt="" />
+            </div>
 
         </div>
 
@@ -38,8 +46,9 @@
 
                     <div class="ad-video__flash"></div>
                     <div class="ad-video__highlight"></div>
+                    <div class="ad-video__card-frame"></div>
 
-                    <iframe src="https://www.youtube.com/embed/9xKR8Vcjias" frameborder="0" allowfullscreen></iframe>
+                    <iframe id="ad_video" src="https://www.youtube.com/embed/9xKR8Vcjias?enablejsapi=1&showinfo=0" frameborder="0"></iframe>
                 </div>
             </div>
 
@@ -64,7 +73,7 @@
         </div>
 
     </main>
-
+    <script src="https://www.youtube.com/player_api"></script>
     <script src="scripts/main.js"></script>
 </body>
 </html>

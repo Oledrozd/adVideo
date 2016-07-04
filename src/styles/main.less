@@ -2,6 +2,21 @@
 @main-color:#ffffff;
 @secondary-color:#000000;
 
+
+@font-face {
+  font-family: 'AmsiProLight';
+  src: url(../fonts/amsi.ttf),
+      url(../fonts/amsi.otf);
+}
+
+@font-face {
+  font-family: 'Merel';
+  src: url(../fonts/merel.ttf),
+  url(../fonts/merel.otf);
+}
+
+
+
 html,body {
   height: 100%;
   background: #cccccc;
@@ -14,7 +29,7 @@ body {
 .main {
 
   width: 970px;
-  height: 250px;
+  height: 255px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -27,6 +42,16 @@ body {
 
   .ad {
 
+    &-preloader {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      font-size: 1.2em;
+      font-family: AmsiProLight, sans-serif;
+      text-align: center;
+      line-height: 255px;
+    }
+
     &-info, &-video,&-control {
       display: inline-block;
       vertical-align: top;
@@ -38,7 +63,20 @@ body {
 
     &-close {
       text-align: right;
-      font-size: 12px;
+      position: relative;
+      z-index: 1;
+
+
+      & .ad-close__button {
+        font-size: 11px;
+        text-decoration: underline;
+        cursor: pointer;
+        width: 80px;
+        margin: 0 0 0 auto;
+      }
+      & .button-close {
+        vertical-align: middle;
+      }
     }
 
     &-info {
@@ -48,7 +86,7 @@ body {
       &-title {
 
         &__logo {
-          background: url("../images/T_SamsungLogo.png") no-repeat;
+          background: url("../images/logo_images/T_SamsungLogo.png") no-repeat;
           background-size: 70px;
           width: 75px;
           height: 12px;
@@ -56,7 +94,7 @@ body {
         }
 
         &__model {
-          background: url("../images/T_GalaxyLogo.png") -4px 0 no-repeat;
+          background: url("../images/logo_images/T_GalaxyLogo.png") -4px 0 no-repeat;
           background-size: 180px;
           width: 180px;
           height: 30px;
@@ -68,16 +106,22 @@ body {
         font-weight: lighter;
         position: absolute;
         bottom: 30px;
+        font-family: AmsiProLight, sans-serif;
+        opacity: 0;
+        transition: 1s;
       }
 
     }
 
     &-video {
       width: 50%;
+      transition: 2s;
+      transform: translate(0, 300px);
 
       &__video-container {
         height: 100%;
         background: url("../images/phone_sprite.png") no-repeat;
+
       }
 
       &__rain-container {
@@ -94,18 +138,18 @@ body {
           height: 24px;
 
           &_1 {
-            background: url("../images/raindrop_1.png") no-repeat;
+            background: url("../images/animations_images/raindrop_1.png") no-repeat;
             width: 30px;
             height: 30px;
           }
           &_2 {
-            background: url("../images/raindrop_2.png") no-repeat;
+            background: url("../images/animations_images/raindrop_2.png") no-repeat;
           }
           &_3 {
-            background: url("../images/raindrop_3.png") no-repeat;
+            background: url("../images/animations_images/raindrop_3.png") no-repeat;
           }
           &_4 {
-            background: url("../images/raindrop_4.png") no-repeat;
+            background: url("../images/animations_images/raindrop_4.png") no-repeat;
           }
         }
       }
@@ -115,11 +159,11 @@ body {
         top: 14px;
         left: 77px;
         height: 198px;
-        width: 362px;
+        width: 362px
       }
 
       &__flash {
-        background:url("../images/flash.png") no-repeat;
+        background:url("../images/animations_images/flash.png") no-repeat;
         background-size: cover;
         width: 50px;
         height: 50px;
@@ -132,17 +176,25 @@ body {
       }
 
       &__highlight{
-        background: url("../images/card_highlight.png") no-repeat;
+        background: url("../images/animations_images/card_highlight.png") no-repeat -6px 0;
         background-size: 40%;
         width: 56px;
-        height: 38px;
+        height: 35px;
         position: absolute;
         top: 61%;
         left: 16%;
         transition: .2s;
         z-index: -1;
         opacity: 0;
-        background-position: -6px 0px;
+      }
+      &__card-frame {
+        background: url("../images/animations_images/card_frame.png") no-repeat 0 0;
+        width: 57px;
+        height: 47px;
+        position: absolute;
+        top: 57%;
+        left: 16%;
+        display: none;
       }
     }
 
@@ -152,7 +204,8 @@ body {
       &-explore, &-explanation {
         display: inline-block;
         vertical-align: top;
-        height: 100%;
+        height: 90%;
+        margin-top: 5%;
       }
 
       &-explore {
@@ -161,45 +214,63 @@ body {
         position: relative;
 
         &__control{
-          writing-mode: bt-lr; /* IE */
-          -webkit-appearance: slider-vertical;
-          width: 2px;
-          height: 100%;
-          padding: 0 47%;
+          -webkit-appearance: none;
+          width: 200px;
+          height: 2px;
+          padding: 0 46%;
+          transform: rotate(-90deg) translate(-300px,0);
+          position: absolute;
+          top: 96px;
+          left: -100px;
+          transition: 2.5s;
+
+          &:focus {
+            outline: none;
+          }
 
 
           &::-webkit-slider-runnable-track {
             background: @secondary-color;
-            width: 100%;
+            height: 1px;
+          }
+
+          &::-moz-range-track {
+            background: @secondary-color;
+            height: 1px;
+          }
+
+          &::-ms-track {
+            background: @secondary-color;
+            height: 1px;
           }
 
           &::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width:15px;
-            height:15px;
+            width:20px;
+            height:20px;
             border-radius: 50%;
 
             cursor: move;
-            margin-left: -10px;
-            background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4DDBFF), to(#00CCFF));
+            margin-top: -9px;
+            background: #000;
           }
           &::-moz-range-thumb {
-            width:15px;
-            height:15px;
+            width:20px;
+            height:20px;
             border-radius: 50%;
             background: @secondary-color;
             cursor: move;
-            margin-left: -10px;
-            background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4DDBFF), to(#00CCFF));
+            margin-top: -9px;
+            background: #000;
           }
           &::-ms-thumb {
-            width:15px;
-            height:15px;
+            width:20px;
+            height:20px;
             border-radius: 50%;
             background: @secondary-color;
             cursor: move;
-            margin-left: -10px;
-            background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4DDBFF), to(#00CCFF));
+            margin-top: -9px;
+            background: #000;
           }
         }
 
@@ -219,26 +290,33 @@ body {
         &__explore {
           font-size: 12px;
           font-weight: bold;
+          font-family: 'AmsiProLight', sans-serif;
+          opacity: 0;
+          transition: 1s;
         }
 
         &-button {
           vertical-align: bottom;
           position: relative;
 
+
           &__buy {
+            font-family: 'Merel', sans-serif;
             text-transform: uppercase;
-            background: @secondary-color;
+            background: #333333;
             color: @main-color;
-            width: 90%;
+            width: 80%;
             border:none;
             outline: none;
             border-radius: 20px;
             height: 30px;
-            line-height: 30px;
+            line-height: 28px;
             cursor: pointer;
             position: absolute;
             bottom: 0;
-            left: 5%;
+            left: 10%;
+            opacity: 0;
+            transition: 1s;
           }
         }
       }

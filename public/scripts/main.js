@@ -1,3 +1,53 @@
+var controlModule = ( function () {
+
+    var closeBlock = function ( closeBlock ) {
+
+            closeBlock.style.display = 'none';
+
+    };
+
+    return {
+        closeBlock: closeBlock
+    }
+
+}());
+
+
+
+var videoModule = ( function () {
+
+    var player;
+
+    function onPlayerReady( event ) {
+        player.mute();
+        player.playVideo();
+    }
+
+    var runPlayer = function ( playerId, animateFunc ) {
+
+        window.onYouTubeIframeAPIReady = function() {
+
+            animateFunc();
+
+            player = new YT.Player( playerId , {
+
+                events: {
+                    'onReady': onPlayerReady
+                }
+
+            });
+        }
+
+    };
+
+    return {
+        runPlayer: runPlayer
+    }
+
+}());
+
+
+
 var adRotateModule = (function () {
 
     var exploreFunc = function ( rotateItem, rotateChangerValue, videoAd ) {
@@ -9,9 +59,9 @@ var adRotateModule = (function () {
             rotateItem.style.backgroundPosition = '0px ' + ( rotateItemCurrPos ) + 'px';
 
             if ( rotateChangerValue !== 60 ) {
-                videoAd.style.zIndex = '-1';
+                videoAd.style.opacity = '0';
             } else {
-                videoAd.style.zIndex = '1';
+                videoAd.style.opacity = '1';
             }
 
     };
@@ -21,9 +71,52 @@ var adRotateModule = (function () {
     }
 }());
 
+
+
 var adAnimateModule = ( function () {
 
+    var videoEmergence = function ( videoBlock, rotateChanger, adTextBlock, buyButton, exploreText ) {
 
+        var emergenceConfig = {
+
+            firstStageTimeout: 1000,
+            secondStageTimeout: 2000
+
+        };
+
+        function opacityChange ( element ) {
+            element.style.opacity = '1';
+        }
+
+        function positionVideoChange ( element ) {
+            element.style.transform = 'translate(0, 0)';
+            element.style.webkitTransform = 'translate(0, 0)';
+            element.style.mozTransform = 'translate(0, 0)';
+        }
+
+        function positionChange ( element ) {
+            element.style.transform = 'rotate(-90deg) translate(0, 0)';
+            element.style.webkitTransform = 'rotate(-90deg) translate(0, 0)';
+            element.style.mozTransform = 'rotate(-90deg) translate(0, 0)';
+        }
+
+        positionVideoChange ( videoBlock );
+        positionChange ( rotateChanger );
+
+        setTimeout( function ( ){
+
+            opacityChange ( adTextBlock );
+            opacityChange ( exploreText );
+
+        }, emergenceConfig.firstStageTimeout);
+
+        setTimeout( function ( ){
+
+            opacityChange ( buyButton );
+
+        }, emergenceConfig.secondStageTimeout);
+
+    };
 
     var flashAnimate = function ( rotateChangerValue, flashElem ) {
 
@@ -40,18 +133,22 @@ var adAnimateModule = ( function () {
         }
     };
 
-    var cardHighlightAnimate = function ( rotateChangerValue, highlightElem ) {
+    var cardHighlightAnimate = function ( rotateChangerValue, highlightElem, frameElem ) {
         if ( rotateChangerValue === 1 ) {
 
+            frameElem.style.display='block';
+
             highlightElem.style.opacity = '1';
-            highlightElem.style.zIndex = '2';
-            highlightElem.style.backgroundPosition = '50px 0';
+            highlightElem.style.zIndex = '0';
+            highlightElem.style.backgroundPosition = '40px 0';
 
 
             setTimeout( function () {
                 highlightElem.style = '';
             },200)
 
+        } else {
+            frameElem.style.display = 'none';
         }
     };
 
@@ -119,10 +216,13 @@ var adAnimateModule = ( function () {
     return {
         flashAnimate: flashAnimate,
         cardHighlightAnimate: cardHighlightAnimate,
-        rainAnimate: rainAnimate
+        rainAnimate: rainAnimate,
+        videoEmergence: videoEmergence
     }
 
 }());
+
+
 
 var adTextChangeModule = (function() {
 
@@ -155,19 +255,32 @@ var adTextChangeModule = (function() {
 }());
 
 
-var mainModule = (function () {
+
+var controller = ( function () {
+
     var rotateChanger = document.querySelector('.ad-control-explore__control'),
         rotateItem = document.querySelector('.ad-video__video-container'),
         videoAd = document.querySelector('.ad-video__video-container iframe'),
+        videoBlock = document.querySelector('.ad-video'),
 
         flashElem = document.querySelector('.ad-video__flash'),
         highlightElem = document.querySelector('.ad-video__highlight'),
+        frameElem = document.querySelector('.ad-video__card-frame'),
         rainContainer = document.querySelector('.ad-video__rain-container'),
         rainDropsClass = 'ad-video__rain-drop',
 
-        adTextBlock = document.querySelector('.ad-info__text');
+        adTextBlock = document.querySelector('.ad-info__text'),
+        buyButton = document.querySelector('.ad-control-explanation-button__buy'),
+        exploreText = document.querySelector('.ad-control-explanation__explore'),
+        closeButton = document.querySelector('.ad-close__button'),
+        closeBlock = document.querySelector( '.main'),
+
+        videoPlayerId = 'ad_video';
 
 
+    closeButton.addEventListener( 'click', function() {
+        controlModule.closeBlock( closeBlock )
+    });
 
     rotateChanger.addEventListener( 'input', function () {
 
@@ -176,13 +289,15 @@ var mainModule = (function () {
         adRotateModule.exploreFunc( rotateItem, currRotateChangerValue, videoAd);
 
         adAnimateModule.flashAnimate( currRotateChangerValue, flashElem );
-        adAnimateModule.cardHighlightAnimate( currRotateChangerValue, highlightElem );
+        adAnimateModule.cardHighlightAnimate( currRotateChangerValue, highlightElem, frameElem );
         adAnimateModule.rainAnimate( currRotateChangerValue, rainContainer, rainDropsClass);
 
         adTextChangeModule.adTextChange( currRotateChangerValue, adTextBlock);
 
     });
 
-
+    videoModule.runPlayer( videoPlayerId, function() {
+        adAnimateModule.videoEmergence( videoBlock, rotateChanger, adTextBlock, buyButton, exploreText)
+    });
 
 }());
