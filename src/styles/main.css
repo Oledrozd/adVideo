@@ -187,7 +187,7 @@ body {
   position: absolute;
   top: 96px;
   left: -100px;
-  transition: 2.5s;
+  transition: 3s;
 }
 .main .ad-control-explore__control:focus {
   outline: none;
@@ -199,6 +199,7 @@ body {
 .main .ad-control-explore__control::-moz-range-track {
   background: #000000;
   height: 1px;
+  width: 100%;
 }
 .main .ad-control-explore__control::-ms-track {
   background: #000000;
